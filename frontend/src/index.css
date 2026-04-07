@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-clay-primary: #0ccc48;
+  --color-clay-secondary: #3c8642;
+  --color-clay-tertiary: #9afdd2;
+  --color-clay-neutral: #e9b7ff;
+  
+  --radius-clay: 3rem;
+  
+  /* Puffed out shadows using the neutral/bg tones */
+  --shadow-clay-out: 8px 8px 16px rgba(12, 204, 72, 0.2), -8px -8px 16px rgba(255, 255, 255, 1);
+  --shadow-clay-in: inset 6px 6px 12px rgba(0, 0, 0, 0.08), inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+}
+
+@layer utilities {
+  .clay-card {
+    background: white;
+    border-radius: 2.5rem;
+    box-shadow: 12px 12px 24px rgba(60, 134, 66, 0.15), -12px -12px 24px rgba(255, 255, 255, 1);
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .clay-inset {
+    background: #f7fcf8;
+    border-radius: 2rem;
+    box-shadow: inset 6px 6px 12px rgba(12, 204, 72, 0.1), inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+  }
+
+  .clay-button {
+    border-radius: 1.25rem;
+    font-weight: 700;
+    transition: all 0.2s;
+    box-shadow: 6px 6px 12px rgba(12, 204, 72, 0.2), -6px -6px 12px rgba(255, 255, 255, 1);
+  }
+
+  .clay-button:active {
+    transform: scale(0.95);
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+  }
+
+  .clay-button-primary {
+    background: #0ccc48;
+    color: white;
+    box-shadow: 6px 6px 12px rgba(12, 204, 72, 0.3), -2px -2px 8px rgba(255, 255, 255, 0.2), inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  
+  .clay-button-neutral {
+    background: #e9b7ff;
+    color: #4a1d4a;
+    box-shadow: 6px 6px 12px rgba(233, 183, 255, 0.4), -2px -2px 8px rgba(255, 255, 255, 1);
+  }
+}
+
+body {
+  background-color: #f7fcf8; /* Light green tint */
+  color: #1a2e1d;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  margin: 0;
+}

@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+.env
+*.db
+backend/sanctuary.db
+
+# Node.js
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+*.log
+frontend-dev.log
+frontend-dev.err.log
+backend-server.log
+backend-server.err.log
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Misc
+.pyre/
+.pyre_configuration
+pyrightconfig.json
