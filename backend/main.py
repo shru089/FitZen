@@ -16,6 +16,7 @@ import models.nutrition   # noqa: F401
 import models.activity    # noqa: F401
 import models.sleep       # noqa: F401
 import models.task        # noqa: F401
+import models.hydration   # noqa: F401
 
 # ─── Create tables ───────────────────────────────────────────────────────────
 Base.metadata.create_all(bind=engine)
@@ -52,6 +53,7 @@ from routers.sleep import router as sleep_router
 from routers.tasks import router as tasks_router
 from routers.coaching import router as coaching_router
 from routers.progress import router as progress_router
+from routers.hydration import router as hydration_router
 
 app.include_router(auth_router)
 app.include_router(users_router)
@@ -61,6 +63,7 @@ app.include_router(sleep_router)
 app.include_router(tasks_router)
 app.include_router(coaching_router)
 app.include_router(progress_router)
+app.include_router(hydration_router)
 
 
 # ─── Health check ────────────────────────────────────────────────────────────

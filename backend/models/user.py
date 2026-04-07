@@ -35,3 +35,4 @@ class User(Base):
     activities = relationship("Activity", back_populates="user", cascade="all, delete-orphan")
     sleep_logs = relationship("SleepLog", back_populates="user", cascade="all, delete-orphan")
     tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
+    hydration_logs = relationship("HydrationLog", back_populates="user", cascade="all, delete-orphan")

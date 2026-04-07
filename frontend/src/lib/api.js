@@ -51,6 +51,19 @@ export const registerUser = (payload) =>
     method: 'POST',
     body: JSON.stringify(payload),
   });
+
+export const logHydration = (amount_ml) => 
+  apiRequest('/api/hydration/log', {
+    method: 'POST',
+    body: JSON.stringify({ amount_ml }),
+  });
+
+export const getDailyHydration = () => 
+  apiRequest('/api/hydration/daily');
+
+export const getProgressData = () => 
+  apiRequest('/api/progress/weekly');
+
 export const getDashboardData = (date) => 
   apiRequest(`/api/coaching/dashboard${date ? `?log_date=${date}` : ''}`);
 

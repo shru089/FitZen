@@ -6,6 +6,7 @@ import LoginPage from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import MealLogging from './pages/MealLogging';
 import WorkoutLogging from './pages/WorkoutLogging';
+import Stats from './pages/Stats';
 import { clearStoredToken, getStoredToken } from './lib/api';
 
 const pageVariants = {
@@ -28,6 +29,7 @@ const Navigation = () => {
     { path: '/dashboard', icon: 'home' },
     { path: '/meal-logging', icon: 'restaurant' },
     { path: '/workout-logging', icon: 'fitness_center' },
+    { path: '/stats', icon: 'insights' },
     { path: '/settings', icon: 'settings' }
   ];
   
@@ -124,6 +126,20 @@ const App = () => {
                 transition={pageTransition}
               >
                 <WorkoutLogging />
+                <Navigation />
+              </motion.div>
+            ) : <Navigate to="/login" replace />
+          } />
+          <Route path="/stats" element={
+            isAuthenticated ? (
+              <motion.div
+                initial="initial"
+                animate="in"
+                exit="out"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <Stats />
                 <Navigation />
               </motion.div>
             ) : <Navigate to="/login" replace />

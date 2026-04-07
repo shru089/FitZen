@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ClayCard, ClayProgressRing } from '../components';
-import { getDashboardData } from '../lib/api';
+import { getDashboardData, getDailyHydration, logHydration } from '../lib/api';
 
 const streakBarHeights = [52, 68, 76, 88, 72, 94, 82];
 const healthBubbleClassNames = {
@@ -13,6 +13,7 @@ const healthBubbleClassNames = {
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
+  const [hydration, setHydration] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,8 +21,12 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await getDashboardData();
-        setData(result);
+        const [dash, water] = await Promise.all([
+          getDashboardData(),
+          getDailyHydration()
+        ]);
+        setData(dash);
+        setHydration(water || 0);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -30,6 +35,15 @@ const Dashboard = () => {
     };
     fetchData();
   }, []);
+
+  const handleAddWater = async (amount) => {
+    try {
+      await logHydration(amount);
+      setHydration(prev => prev + amount);
+    } catch (err) {
+      console.error("Hydration log failed", err);
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -218,6 +232,40 @@ const Dashboard = () => {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 2 }}
             />
+          </ClayCard>
+        </motion.div>
+
+        {/* Hydration Widget */}
+        <motion.div variants={itemVariants}>
+          <ClayCard className="p-8" hover={true}>
+            <div className="flex items-center justify-between gap-8">
+              <div className="flex-1">
+                <h3 className="text-sm font-black text-clay-secondary uppercase tracking-widest mb-1">Hydration Hub</h3>
+                <p className="text-2xl font-black text-clay-secondary">{hydration} <span className="text-xs text-slate-400">ml</span></p>
+                <div className="flex gap-2 mt-4">
+                  {[250, 500].map(amount => (
+                    <motion.button
+                      key={amount}
+                      onClick={() => handleAddWater(amount)}
+                      className="px-4 py-2 bg-clay-neutral rounded-xl text-xs font-bold text-clay-primary shadow-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      +{amount}ml
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+              <div className="relative w-24 h-24 bg-clay-tertiary/20 rounded-[2rem] flex items-center justify-center overflow-hidden shadow-[inset_4px_4px_8px_rgba(0,0,0,0.05)]">
+                <motion.div 
+                  className="absolute bottom-0 w-full bg-clay-primary/40"
+                  initial={{ height: 0 }}
+                  animate={{ height: `${Math.min(100, (hydration / 2000) * 100)}%` }}
+                  transition={{ type: "spring", stiffness: 50 }}
+                />
+                <span className="material-symbols-outlined text-4xl text-clay-primary relative z-10">water_drop</span>
+              </div>
+            </div>
           </ClayCard>
         </motion.div>
 
